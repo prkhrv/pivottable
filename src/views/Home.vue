@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-     <ejs-pivotview height="600" :dataSourceSettings="dataSourceSettings"> </ejs-pivotview>
+     <ejs-pivotview height="600" :dataSourceSettings="dataSourceSettings" :allowCalculatedField="allowCalculatedField"> </ejs-pivotview>
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 // @ is an alias to /src
 import Vue from 'vue'
 import {Page, TreeGridPlugin } from '@syncfusion/ej2-vue-treegrid';
-import { PivotViewPlugin } from "@syncfusion/ej2-vue-pivotview";
+import { PivotViewPlugin,CalculatedField } from "@syncfusion/ej2-vue-pivotview";
 
 Vue.use(PivotViewPlugin);
 
@@ -18,55 +18,43 @@ import HelloWorld from '@/components/HelloWorld.vue'
 
 function getPivotData() {
   let pivotData= [
-    
-    {
-        permissible_values: [
-            "325",
-            "543",
-            "1234",
-            "98"
-        ],
-        Year:2018,
-        lft: 1,
-        rgt: 2,
-        _id: "5d272f409c894b1f201cebf6",
-        company: "5d109a26681d4b0490c397b4",
-        head_key: "2",
-        Q1: 10,
-        Q2: 12,
-        Q3: 23,
-        Q4: 45,
-        Sold: 10,
-      	Amount: 360,
+
+  	 {
         name: "Programming",
-        parent_head: "5d272ceb3eea3d28203c4964",
         tree_id: "Books",
-        accounting_head: "NewHead"
+        Jan: 10,
+        Feb: 20,
+        Mar: 30,
+        Apr: 40,
+        May: 50,
+        Jun: 60,
+        Jul: 70,
+        Aug: 80,
+        Sep: 90,
+        Oct: 100,
+        Nov: 110,
+        Dec: 120,
+        Year: 2019
+
     },
     {
-        permissible_values: [
-            "325",
-            "543",
-            "1234",
-            "98"
-        ],
-        Year:2018,
-        lft: 1,
-        rgt: 2,
-        _id: "5d272f409c894b1f201cebf6",
-        company: "5d109a26681d4b0490c397b4",
-        head_key: "2",
-        Q1: 23,
-        Q2:98,
-        Q3:65,
-        Q4:56,
-         Sold: 10,
-      Amount: 360,
-        name: "DBMS",
-        parent_head: "5d272ceb3eea3d28203c4964",
+        name: "Abc",
         tree_id: "Books",
-        accounting_head: "NewHead"
+        Jan: 10,
+        Feb: 20,
+        Mar: 30,
+        Apr: 40,
+        May: 50,
+        Jun: 60,
+        Jul: 70,
+        Aug: 80,
+        Sep: 90,
+        Oct: 100,
+        Nov: 110,
+        Dec: 120,
+        Year: 2019
     }
+
   ];
 
   return pivotData;
@@ -80,21 +68,39 @@ export default {
     PivotViewPlugin
   },
   provide: {
-      treegrid: [ Page ]
+      treegrid: [ Page,CalculatedField ]
     },
   data: function() {
   	return {
   		dataSourceSettings: {
-        columns: [{ name: "Year" },],
+        columns: [{ name: "Year" }],
         values: [
-          { name: "Q1", caption: "Q1" },
-          { name: "Q2", caption: "Q2" },
-          { name: "Q3", caption: "Q3" },
-          { name: "Q4", caption: "Q4" }
+          { name: "Jan", caption: "Jan" },
+          { name: "Feb", caption: "Feb" },
+          { name: "Mar", caption: "Mar" },
+          { name: "Apr", caption: "Apr" },
+          { name: "May", caption: "May" },
+          { name: "Jun", caption: "Jun" },
+          { name: "Jul", caption: "Jul" },
+          { name: "Aug", caption: "Aug" },
+          { name: "Sep", caption: "Sep" },
+          { name: "Oct", caption: "Oct" },
+          { name: "Nov", caption: "Nov" },
+          { name: "Dec", caption: "Dec" },
+          { name: 'Total', caption: 'Total Units', type: 'CalculatedField' }
+
+
         ],
         dataSource: getPivotData(),
         rows: [{ name: "tree_id" }, { name: "name" }],
-      }
+        showColumnGrandTotals:false,
+        calculatedFieldSettings: [{
+             name: 'Total',
+             formula: '"Sum(Jan)"+"Sum(Feb)"+"Sum(Mar)"+"Sum(Apr)"+"Sum(May)"+"Sum(Jun)"+"Sum(Jul)"+"Sum(Aug)"+"Sum(Sep)"+"Sum(Oct)"+"Sum(Nov)"+"Sum(Dec)"'
+          }]
+
+      },
+      allowCalculatedField:true
     
   	}
   }
